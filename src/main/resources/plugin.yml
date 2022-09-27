@@ -1,0 +1,17 @@
+name: BedWars
+version: 1.0
+main: rip.tilly.bedwars.BedWars
+authors:
+  - Lucanius
+  - Trixkz
+
+commands:
+  setspawn:
+  level:
+  xp:
+  party:
+  p:
+  arena:
+  toggle:
+  spectate:
+  spec:

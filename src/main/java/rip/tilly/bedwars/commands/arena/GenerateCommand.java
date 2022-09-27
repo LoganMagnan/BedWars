@@ -1,0 +1,49 @@
+package rip.tilly.bedwars.commands.arena;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import rip.tilly.bedwars.BedWars;
+import rip.tilly.bedwars.commands.BaseCommand;
+import rip.tilly.bedwars.game.arena.Arena;
+import rip.tilly.bedwars.runnables.ArenaCommandRunnable;
+import rip.tilly.bedwars.utils.CC;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GenerateCommand extends BaseCommand {
+
+    private BedWars main = BedWars.getInstance();
+
+    @Override
+    public void executeAs(CommandSender sender, Command cmd, String label, String[] args) {
+        Player player = (Player) sender;
+
+        if (args.length == 0) {
+            player.sendMessage(CC.translate("&cError: no arena found! /arena <args> <arena>"));
+            return;
+        }
+
+        Arena arena = this.main.getArenaManager().getArena(args[1]);
+
+        if (arena != null) {
+            if (args.length == 3) {
+                int arenas = Integer.parseInt(args[2]);
+                this.main.getServer().getScheduler().runTask(this.main, new ArenaCommandRunnable(this.main, arena, arenas));
+                this.main.getArenaManager().setGeneratingArenaRunnable(this.main.getArenaManager().getGeneratingArenaRunnable() + 1);
+            } else {
+                player.sendMessage(CC.translate("&cUsage: /arena generate <name> <copies>"));
+            }
+        } else {
+            player.sendMessage(CC.translate("&cThis arena does not exist"));
+        }
+    }
+
+    @Override
+    public List<String> getTabCompletions(CommandSender sender, Command cmd, String label, String[] args) {
+        List<String> tabCompletions = new ArrayList<String>();
+
+        return tabCompletions;
+    }
+}
